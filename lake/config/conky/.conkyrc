@@ -1,0 +1,109 @@
+conky.config = {
+	
+	update_interval = 1,
+	cpu_avg_samples = 2,
+	net_avg_samples = 2,
+	out_to_console = false,
+	override_utf8_locale = true,
+	double_buffer = true,
+	no_buffers = true,
+	text_buffer_size = 32768,
+	imlib_cache_size = 0,
+	own_window = true,
+	own_window_type = 'normal',
+	own_window_argb_visual = true,
+	own_window_argb_value = 50,
+	own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+	border_inner_margin = 5,
+	border_outer_margin = 0,
+	xinerama_head = 1,
+	alignment = 'bottom_right',
+	gap_x = 0,
+	gap_y = 33,
+	draw_shades = false,
+	draw_outline = false,
+	draw_borders = false,
+	draw_graph_borders = false,
+	use_xft = true,
+	font = 'Ubuntu Mono:size=12',
+	xftalpha = 0.8,
+	uppercase = false,
+	default_color = 'white',
+	own_window_colour = '#000000',
+	minimum_width = 300, minimum_height = 0,
+	alignment = 'top_right',
+
+};
+conky.text = [[
+
+${voffset -16}${font sans-serif:bold:size=18}${alignc}${time %H:%M}${font}
+${voffset 4}${alignc}${time  %Y-%m-%d}
+${font}${voffset -4}
+${font sans-serif:bold:size=10}SYSTEM ${hr 2}
+${font sans-serif:normal:size=8}$sysname $kernel $alignr $machine
+Uptime:$alignr$uptime
+Processes: $alignr ${execi 1000 ps aux | wc -l}
+
+${color FF0000}${font sans-serif:bold:size=10}CPU ${hr 2}$color
+${font sans-serif:normal:size=8}${execi 1000 grep model /proc/cpuinfo | cut -d : -f2 | tail -1 | sed 's/\s//'}
+#${font sans-serif:normal:size=8}${cpugraph cpu1}
+#CPU: ${cpu cpu1}% ${cpubar cpu1}
+Temperature $alignr ${exec sensors | grep Tdie | cut -c 15-22}
+CPU1: ${cpu cpu1}% $alignr ${exec awk '/cpu MHz/{i++}i==1{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu1 8,60}
+CPU2: ${cpu cpu2}% $alignr ${exec awk '/cpu MHz/{i++}i==2{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu2 8,60}
+CPU3: ${cpu cpu3}% $alignr ${exec awk '/cpu MHz/{i++}i==3{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu3 8,60}
+CPU4: ${cpu cpu4}% $alignr ${exec awk '/cpu MHz/{i++}i==4{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu4 8,60}
+CPU5: ${cpu cpu5}% $alignr ${exec awk '/cpu MHz/{i++}i==5{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu5 8,60}
+CPU6: ${cpu cpu6}% $alignr ${exec awk '/cpu MHz/{i++}i==6{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu6 8,60}
+CPU7: ${cpu cpu7}% $alignr ${exec awk '/cpu MHz/{i++}i==7{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu7 8,60}
+CPU8: ${cpu cpu8}% $alignr ${exec awk '/cpu MHz/{i++}i==8{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu8 8,60}
+CPU9: ${cpu cpu9}% $alignr ${exec awk '/cpu MHz/{i++}i==9{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu9 8,60}
+CPU10: ${cpu cpu10}% $alignr ${exec awk '/cpu MHz/{i++}i==10{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu10 8,60}
+CPU11: ${cpu cpu11}% $alignr ${exec awk '/cpu MHz/{i++}i==11{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu11 8,60}
+CPU12: ${cpu cpu12}% $alignr ${exec awk '/cpu MHz/{i++}i==12{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu12 8,60}
+CPU13: ${cpu cpu13}% $alignr ${exec awk '/cpu MHz/{i++}i==13{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu13 8,60}
+CPU14: ${cpu cpu14}% $alignr ${exec awk '/cpu MHz/{i++}i==14{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu14 8,60}
+CPU15: ${cpu cpu15}% $alignr ${exec awk '/cpu MHz/{i++}i==15{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu15 8,60}
+CPU16: ${cpu cpu16}% $alignr ${exec awk '/cpu MHz/{i++}i==16{printf "%.f",$4; exit}' /proc/cpuinfo} MHz $alignr ${cpubar cpu16 8,60}
+${font sans-serif:bold:size=10}MEMORY ${hr 2}
+${font sans-serif:normal:size=8}RAM $alignc $mem / $memmax $alignr $memperc%
+$membar
+SWAP $alignc ${swap} / ${swapmax} $alignr ${swapperc}%
+${swapbar}
+
+${font sans-serif:bold:size=10}DISK USAGE ${hr 2}
+${font sans-serif:normal:size=8}/ $alignc ${fs_used /} / ${fs_size /} $alignr ${fs_used_perc /}%
+${fs_bar /}
+
+${font sans-serif:bold:size=10}TOP PROCESSES ${hr 2}
+${font sans-serif:normal:size=8}Name $alignr PID   CPU%   MEM%${font sans-serif:normal:size=8}
+${top name 1} $alignr ${top pid 1} ${top cpu 1}% ${top mem 1}%
+${top name 2} $alignr ${top pid 2} ${top cpu 2}% ${top mem 2}%
+${top name 3} $alignr ${top pid 3} ${top cpu 3}% ${top mem 3}%
+${top name 4} $alignr ${top pid 4} ${top cpu 4}% ${top mem 4}%
+${top name 5} $alignr ${top pid 5} ${top cpu 5}% ${top mem 5}%
+${top name 6} $alignr ${top pid 6} ${top cpu 6}% ${top mem 6}%
+${top name 7} $alignr ${top pid 7} ${top cpu 7}% ${top mem 7}%
+${top name 8} $alignr ${top pid 8} ${top cpu 8}% ${top mem 8}%
+${top name 9} $alignr ${top pid 9} ${top cpu 9}% ${top mem 9}%
+${top name 10} $alignr ${top pid 10} ${top cpu 10}% ${top mem 10}%
+
+${color 00BB00}${font sans-serif:bold:size=10}GPU ${hr 2}$color
+${font sans-serif:normal:size=8}NVidia GeForce GPU $alignr ${nvidia gpufreq} Mhz
+Memory $alignr ${nvidia memfreq} Mhz
+Temperature $alignr ${nvidia temp} C
+FAN $alignr ${exec nvidia-smi | grep % | cut -c 3-5}
+GPU $alignr ${nvidia gpuutil}%
+${nvidiabar gpuutil}
+RAM  $alignr  ${exec nvidia-smi | grep % | cut -c 37-54}
+${nvidiabar memutil}
+#PCIe $alignr ${nvidia pcieutil}% ${nvidiabar gpuutil}
+
+${color 0000FF}${font sans-serif:bold:size=10}Network ${hr 2}$color
+${font sans-serif:normal:size=8}${voffset 1}${color #98c2c7} Upload: ${color #db7093}${upspeed enp5s0}/s ${alignr}${color #98c2c7}total: ${color #db7093}${totalup enp5s0}
+${voffset 1}${color #98c2c7} Download: ${color #ddaa00}${downspeed enp5s0}/s ${alignr}${color #98c2c7}total: ${color #ddaa00}${totaldown enp5s0}
+
+
+]];
+
+

@@ -1,0 +1,1 @@
+This directory is used to share some software's config file
