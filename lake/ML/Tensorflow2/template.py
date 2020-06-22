@@ -6,6 +6,11 @@ from tensorflow.keras import Model
 from tensorflow.keras.layers import Dense
 import tensorflow.keras.optimizers as optim
 
+import os
+
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'  # Specify which card：0, 1, 2, ...
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"  # Gradually allocate memory
+
 
 class NN(Model):
     def __init__(self, name, num_actions):
