@@ -4,7 +4,7 @@
 # 代码参考
 # https://zhuanlan.zhihu.com/p/37777074
 
-##Python实现PCA
+##Python实现PCA(主成分分析)
 import numpy as np
 
 

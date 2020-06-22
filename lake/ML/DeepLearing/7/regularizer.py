@@ -5,8 +5,8 @@ import tensorflow as tf
 layer = tf.keras.layers.Dense(
     5, input_dim=5,
     kernel_initializer='ones',
-    kernel_regularizer=tf.keras.regularizers.l1(0.01),  # L1
-    activity_regularizer=tf.keras.regularizers.l2(0.01))  # L2
+    kernel_regularizer=tf.keras.regularizers.l1(0.01),  # L1正则化
+    activity_regularizer=tf.keras.regularizers.l2(0.01))  # L2正则化
 tensor = tf.ones(shape=(5, 5)) * 2.0
 out = layer(tensor)
 print(out)

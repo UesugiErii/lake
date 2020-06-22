@@ -1,3 +1,5 @@
+# 权重初始化
+# weight initialize
 # https://www.tensorflow.org/api_docs/python/tf/keras/initializers
 
 ##################################################################################

@@ -1,3 +1,4 @@
+# tensorflow optimizers(优化器)
 # from . import schedules
 # from tensorflow.python.keras.optimizer_v2.adadelta import Adadelta
 # from tensorflow.python.keras.optimizer_v2.adagrad import Adagrad

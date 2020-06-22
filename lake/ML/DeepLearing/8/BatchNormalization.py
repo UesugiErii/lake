@@ -1,3 +1,4 @@
+# batchnorm(批归一化) example
 # https://www.tensorflow.org/api_docs/python/tf/keras/layers/BatchNormalization
 # line 30,39
 

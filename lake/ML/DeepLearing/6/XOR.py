@@ -1,3 +1,5 @@
+# use neural network implement XOR classifier
+
 import tensorflow as tf
 from tensorflow.keras import Model
 from tensorflow.keras.layers import Dense
