@@ -1,0 +1,182 @@
+import gym
+import numpy as np
+import tensorflow as tf
+
+
+# Modify from  Morvan's code
+# https://github.com/MorvanZhou
+
+# tensorboard --logdir=
+
+class DDQN():
+    def __init__(self, n_actions, n_features):
+        self.n_actions = n_actions
+        self.n_features = n_features
+        self.learning_rate = 0.01
+        self.gamma = 0.95
+        self.replace_target_iter = 1000
+        self.memory_index = 0
+        self.memory_size = 200000
+        self.memory = np.zeros((self.memory_size, self.n_features * 2 + 1 + 1)).astype('float32')
+        self.batch_size = 10240
+        self.learn_step_counter = 0
+        config = tf.ConfigProto()
+        config.gpu_options.allow_growth = True
+        self.sess = tf.Session(config=config)
+        self._create_model()
+        self.t_params = tf.get_collection('target_net_params')
+        self.e_params = tf.get_collection('eval_net_params')
+        self.replace_target_op = [tf.assign(t, e) for t, e in zip(self.t_params, self.e_params)]
+
+        # self.summary_writer = tf.summary.FileWriter(logdir='path', graph=self.sess.graph)
+        self.merged = tf.summary.merge_all()
+        self.sess.run(tf.global_variables_initializer())
+
+    def _create_model(self):
+        self.s0 = tf.placeholder(tf.float32, [None, self.n_features], name='s0')  # input
+        self.q_target = tf.placeholder(tf.float32, [None, self.n_actions], name='Q_target')  # for calculating loss
+        with tf.variable_scope('eval_net'):
+            c_names, n_l1, w_initializer, b_initializer = \
+                ['eval_net_params', tf.GraphKeys.GLOBAL_VARIABLES], 10, \
+                tf.random_normal_initializer(0., 0.3), tf.constant_initializer(0.1)  # config of layers
+
+            with tf.variable_scope('l1'):
+                w1 = tf.get_variable('w1', [self.n_features, n_l1], initializer=w_initializer, collections=c_names)
+                b1 = tf.get_variable('b1', [1, n_l1], initializer=b_initializer, collections=c_names)
+                l1 = tf.nn.relu(tf.matmul(self.s0, w1) + b1)
+                tf.summary.histogram('w1', w1)
+                tf.summary.histogram('b1', b1)
+            with tf.variable_scope('l2'):
+                w2 = tf.get_variable('w2', [n_l1, self.n_actions], initializer=w_initializer, collections=c_names)
+                b2 = tf.get_variable('b2', [1, self.n_actions], initializer=b_initializer, collections=c_names)
+                self.q_eval = tf.matmul(l1, w2) + b2
+                tf.summary.histogram('w2', w2)
+                tf.summary.histogram('b2', b2)
+
+        self.s1 = tf.placeholder(tf.float32, [None, self.n_features], name='s1')  # input
+        with tf.variable_scope('target_net'):
+            c_names = ['target_net_params', tf.GraphKeys.GLOBAL_VARIABLES]
+
+            with tf.variable_scope('l1'):
+                w1 = tf.get_variable('w1', [self.n_features, n_l1], initializer=w_initializer, collections=c_names)
+                b1 = tf.get_variable('b1', [1, n_l1], initializer=b_initializer, collections=c_names)
+                l1 = tf.nn.relu(tf.matmul(self.s1, w1) + b1)
+                tf.summary.histogram('w1', w1)
+                tf.summary.histogram('b1', b1)
+
+            with tf.variable_scope('l2'):
+                w2 = tf.get_variable('w2', [n_l1, self.n_actions], initializer=w_initializer, collections=c_names)
+                b2 = tf.get_variable('b2', [1, self.n_actions], initializer=b_initializer, collections=c_names)
+                self.q_next = tf.matmul(l1, w2) + b2
+                tf.summary.histogram('w2', w2)
+                tf.summary.histogram('b2', b2)
+
+        with tf.variable_scope('loss'):
+            self.loss = tf.reduce_mean(tf.squared_difference(self.q_target, self.q_eval))
+            tf.summary.scalar('loss', self.loss)
+        with tf.variable_scope('train'):
+            self._train_op = tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss)
+
+    def choose_action(self, obs):
+        obs = obs[np.newaxis, :]
+        if np.random.random() < 0.05:
+            return np.random.choice((0, 1))
+        else:
+            actions_value = self.sess.run(self.q_eval, feed_dict={self.s0: obs})
+            # if self.learn_step_counter % 1000 == 0:
+            #     print(actions_value)
+            x = np.argmax(actions_value)
+            return x
+
+    def store_transition(self, s0, action, reward, s1):
+        """
+            s0              :4
+            action_num      4
+            reward          5
+            s1              -4:
+        """
+        transition = np.hstack((s0.reshape((1, self.n_features)),
+                                np.array([[action]]),
+                                np.array([[reward]]),
+                                s1.reshape((1, self.n_features))))
+        self.memory[self.memory_index % self.memory_size, :] = transition
+        self.memory_index += 1
+
+    def learn(self):
+        if self.learn_step_counter % self.replace_target_iter == 3:
+            self.sess.run(self.replace_target_op)
+        if self.memory_index > self.memory_size:
+            sample_index = np.random.choice(self.memory_size, size=self.batch_size)
+        else:
+            sample_index = np.random.choice(self.memory_index, size=self.batch_size)
+        batch_memory = self.memory[sample_index, :]
+        q_next, q_eval = self.sess.run(
+            [self.q_next, self.q_eval],
+            feed_dict={
+                self.s1: batch_memory[:, -self.n_features:],  # fixed params
+                self.s0: batch_memory[:, :self.n_features],  # newest params
+            })
+        q_max_to_target = self.sess.run(self.q_eval, {self.s0: batch_memory[:, -self.n_features:]})
+        q_target = q_eval.copy()
+        batch_index = np.arange(self.batch_size, dtype=np.int32)
+        eval_act_index = batch_memory[:, self.n_features].astype(int)
+        reward = batch_memory[:, self.n_features + 1]
+
+        max_action_index = np.argmax(q_max_to_target, axis=1)
+        selected_Q = q_next[batch_index, max_action_index]
+
+        q_target[batch_index, eval_act_index] = reward + self.gamma * selected_Q
+        summary, _, self.lost = self.sess.run([self.merged, self._train_op, self.loss],
+                                              feed_dict={self.s0: batch_memory[:, :self.n_features],
+                                                         self.q_target: q_target})
+
+        # if self.learn_step_counter%500 ==0:
+        #     self.summary_writer.add_summary(summary, self.learn_step_counter)
+
+        self.learn_step_counter += 1
+
+
+def main():
+    total_step = 0
+    episode = 0
+    env = gym.make('CartPole-v0')
+    env = env.unwrapped
+    agent = DDQN(env.action_space.n, env.observation_space.shape[0])
+    max_reward = 0
+    while 1:
+
+        obs = env.reset()
+        one_episode_reward = 0
+
+        while 1:
+            # env.render()
+            action = agent.choose_action(obs)
+
+            obs_, reward, is_finished, info = env.step(action)
+            one_episode_reward += reward
+            x, x_dot, theta, theta_dot = obs_
+            # custom reward for fast convergence
+            r1 = (env.x_threshold - abs(x)) / env.x_threshold - 0.7
+            r2 = (env.theta_threshold_radians - abs(theta)) / env.theta_threshold_radians - 0.5
+            reward = r1 + r2
+
+            if is_finished:
+                # if you don't use custom reward , then the next line is necessary . I don't know why. But this is not the point.
+                # if you       use custom reward , then the next line is not necessary. It will harm performance. I don't know why.
+                # agent.store_transition(obs, action, -5, obs_)
+                if one_episode_reward > max_reward:
+                    max_reward = one_episode_reward
+                print('this episode reward is', one_episode_reward)
+                break
+            agent.store_transition(obs, action, reward, obs_)
+            if total_step > 300:
+                agent.learn()
+            total_step += 1
+            obs = obs_
+        episode += 1
+        print("NO." + str(episode) + "  episode")
+        print(max_reward)
+
+
+if __name__ == '__main__':
+    main()
