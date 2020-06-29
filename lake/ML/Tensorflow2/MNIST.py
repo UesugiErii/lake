@@ -1,11 +1,13 @@
+# tensorflow code template on MNIST
+
 import tensorflow as tf
 import numpy as np
 from tensorflow.keras.layers import Dense, Flatten, Conv2D
 from tensorflow.keras import Model
 import os
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"
+os.environ['CUDA_VISIBLE_DEVICES'] = '0'  # Specify which card：0, 1, 2, ...
+os.environ["TF_FORCE_GPU_ALLOW_GROWTH"] = "true"  # Gradually allocate memory
 
 mnist = tf.keras.datasets.mnist
 
@@ -38,6 +40,8 @@ class MyModel(Model):
 
 
 model = MyModel()
+model.build((None, 28, 28, 1))
+model.summary()
 
 loss_object = tf.keras.losses.SparseCategoricalCrossentropy()
 
