@@ -10,7 +10,7 @@ Recommended books or web, many is writen by chinese↓
 
 ### \<\<机器学习\>\>(西瓜书)
 
-[西瓜书公式推导解析(pumpkin-book)](https://github.com/datawhalechina/pumpkin-book)
+[西瓜书公式推导解析(pumpkin-book)](https://datawhalechina.github.io/pumpkin-book/#/)
 
 [西瓜书笔记](https://github.com/Vay-keen/Machine-learning-learning-notes)
 
