@@ -7,5 +7,3 @@
 [Python进阶](https://eastlakeside.gitbook.io/interpy-zh/)
 
 [Python Cookbook](https://python3-cookbook.readthedocs.io/zh_CN/latest/)
-
-[Google 开源项目风格指南 (中文版)](https://zh-google-styleguide.readthedocs.io/en/latest/)
