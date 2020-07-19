@@ -5,7 +5,7 @@ import sys
 import time
 
 while 1:
-    p = subprocess.Popen(['python3', '/home/zx/Desktop/test/test2.py'],
+    p = subprocess.Popen(['python3', '/home/zx/Desktop/test/2.py'],
                          stdin=sys.stdin,
                          stdout=sys.stdout,
                          stderr=sys.stderr,

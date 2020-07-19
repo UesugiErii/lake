@@ -7,7 +7,7 @@ b = np.array([[1, 2], [3, 4]], dtype=np.float32)
 
 a_t = a.transpose()
 
-# element-wise product 矩阵乘法
+# element-wise product 矩阵逐元素乘法
 # Hadamard product
 
 c = np.multiply(a, b)
