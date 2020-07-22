@@ -1,1 +1,1 @@
-code about \<\<机器学习\>\>(西瓜书)
+code and some information about \<\<机器学习\>\>(西瓜书)
