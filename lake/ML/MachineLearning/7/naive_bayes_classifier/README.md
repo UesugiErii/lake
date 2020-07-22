@@ -19,7 +19,7 @@ MultinomialNB参数比GaussianNB多，但是一共也只有仅仅3个。其中�
 fit_prior|class_prior|最终先验概率
 :--:|:--:|:--:
 false|填或者不填没有意义|P(Y=Ck)=1/k
-true|不填|4581.0
+true|不填|P(Y=Ck)=mk/m
 true|填|P(Y=Ck)=class_prior
 
 ## BernoulliNB类参数
