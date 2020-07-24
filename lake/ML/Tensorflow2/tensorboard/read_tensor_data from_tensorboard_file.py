@@ -3,6 +3,7 @@
 # https://stackoverflow.com/questions/41074688/how-do-you-read-tensorboard-files-programmatically
 
 from tensorboard.backend.event_processing import event_accumulator
+import tensorflow as tf
 
 ea = event_accumulator.EventAccumulator(
     file_path,
