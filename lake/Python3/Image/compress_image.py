@@ -4,8 +4,9 @@
 
 from PIL import Image
 
-foo = Image.open("2.jpg")
+foo = Image.open("1.jpg")
 
 foo = foo.resize(foo.size, Image.ANTIALIAS)  # change size or not
 
-foo.save("3.jpg", optimize=True, quality=70)
+quality = 50
+foo.save("1_{}.jpg".format(quality), optimize=True, quality=quality)

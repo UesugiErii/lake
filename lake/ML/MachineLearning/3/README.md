@@ -1,3 +1,5 @@
+第三章: 线性模型
+
 推荐阅读:
 
 [线性回归原理小结](https://www.cnblogs.com/pinard/p/6004041.html)
