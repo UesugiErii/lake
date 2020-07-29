@@ -60,14 +60,10 @@ def calc_p(x, mean, cov):
     # 计算多元正态分布的概率密度
     # Calculate the probability density of a multivariate normal distribution
     k = mean.shape[0]
-    if k >= 2:
-        cov_inv = np.linalg.inv(cov)
-    else:
-        cov_inv = 1 / cov
-    if k >= 2:
-        cov_det = np.linalg.det(cov)
-    else:
-        cov_det = cov
+
+    cov_inv = np.linalg.inv(cov)
+    cov_det = np.linalg.det(cov)
+
     f = 1 / (np.sqrt(np.power(2 * np.pi, k) * cov_det)) * \
         np.power(np.e, -0.5 * np.dot(
             np.dot((x - mean).transpose(), cov_inv),
@@ -173,7 +169,7 @@ for epoch in range(1, 201):
                        alpha[i] * m
                )
 
-    # 每隔一段时间计算几次正确率
+    # 每隔一段时间计算一次正确率
     count = 0
     for j in range(test_n):
         pro_i = np.zeros((3,), dtype=np.float32)
