@@ -1,4 +1,12 @@
 # Leetcode 429
+#
+# N叉树的层序遍历
+
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+
 
 class Solution:
     def levelOrder(self, root: 'Node') -> List[List[int]]:
