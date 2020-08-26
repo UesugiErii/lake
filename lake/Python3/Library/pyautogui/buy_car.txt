@@ -1,0 +1,44 @@
+# Used to automatically buy all Horizon 4 cars
+
+import pyautogui
+import time
+
+def f2():
+    # 进入
+    pyautogui.press('enter')
+    time.sleep(3)
+    # 筛选
+    pyautogui.press('y')
+    time.sleep(1)
+    #pyautogui.press('down')
+    pyautogui.moveTo(1892, 663)
+    pyautogui.moveTo(1892, 663)
+    pyautogui.moveTo(1892, 663)
+    pyautogui.mouseDown()
+    time.sleep(0.1)
+    pyautogui.mouseUp()
+    time.sleep(1)
+    #pyautogui.press('enter')
+    time.sleep(0.5)
+    pyautogui.press('esc')
+    time.sleep(0.5)
+    # 选颜色
+    pyautogui.press('enter')
+    time.sleep(5)
+    pyautogui.press('y')
+    time.sleep(0.5)
+    pyautogui.press('enter')
+    time.sleep(0.5)
+    # 确认购买
+    pyautogui.press('enter')
+    time.sleep(0.5)
+    pyautogui.press('enter')
+    time.sleep(25)
+    # 返回
+    pyautogui.press('esc')
+    time.sleep(1)
+
+def g2():
+    time.sleep(5)  # use this time switch to game
+    while 1:
+        f2()
