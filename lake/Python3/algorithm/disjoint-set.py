@@ -18,6 +18,8 @@
 # 你可以假设在 edges 中不会出现重复的边。而且由于所以的边都是无向边，
 # [0, 1] 与 [1, 0]  相同，所以它们不会同时在 edges 中出现
 
+from typing import List
+
 
 class Solution:
     def countComponents(self, n: int, edges: List[List[int]]) -> int:

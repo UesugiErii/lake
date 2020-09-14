@@ -19,7 +19,8 @@ x_train = x_train[..., tf.newaxis].astype(np.float32)
 x_test = x_test[..., tf.newaxis].astype(np.float32)
 
 train_ds = tf.data.Dataset.from_tensor_slices(
-    (x_train, y_train)).prefetch(buffer_size=tf.data.experimental.AUTOTUNE).shuffle(10000).batch(512)
+    (x_train, y_train)).prefetch(buffer_size=tf.data.experimental.AUTOTUNE).shuffle(10000).batch(
+    512)  # bigger shuffle, more random
 test_ds = tf.data.Dataset.from_tensor_slices((x_test, y_test)).batch(512)
 
 

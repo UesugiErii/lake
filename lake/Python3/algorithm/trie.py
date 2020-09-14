@@ -8,6 +8,8 @@
 # 例如，给定 words = ["ab", "bc"] 和 S = "aabcd"，需要返回 "a<b>abc</b>d"
 # 注意返回 "a<b>a<b>b</b>c</b>d" 会使用更多的标签，因此是错误的
 
+from typing import List
+
 
 # 定义一个字典树
 class Trie:
