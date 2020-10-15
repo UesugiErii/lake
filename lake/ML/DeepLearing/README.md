@@ -1,1 +1,1 @@
-Some relevant codes and information about <<Deep Learning>>
+Some relevant codes and information about <\<Deep Learning>>

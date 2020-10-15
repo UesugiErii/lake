@@ -88,6 +88,10 @@
 
 `sudo dpkg -P linux-image-4.5.0-51-generic`
 
+## 删除已卸载软件的配置文件
+
+`dpkg -l |grep ^rc|awk '{print $2}' |sudo xargs dpkg -P`
+
 ## 删除仓库及其GPG密钥
 
 ### 删除仓库
