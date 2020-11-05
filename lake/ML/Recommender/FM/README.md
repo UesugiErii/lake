@@ -12,20 +12,24 @@
 
 ## 注意点
 
-### 1
+1. 对于连续值需要进行分段变成离散值
 
-在上面两个公式中, x_i可以理解为一个事件示性函数, 当x_i这个输入存在时则为1, 否则为0
-
-而公式里的w_i和v_i都是x_i的对应嵌入向量
-
-### 2
-
-高阶公式中第l阶的值是l个嵌入向量做哈达玛乘积, 再求和
+2. 高阶公式中第l阶的值是l个嵌入向量做哈达玛乘积, 再求和
 
 ## 推荐代码
+
+更推荐第一份代码, 简单易懂
+
+[FM_Demo.ipynb](https://github.com/morenjiujiu/FM/blob/master/FM_Demo.ipynb)
 
 [neural_factorization_machine](https://github.com/hexiangnan/neural_factorization_machine)
 
 ## 参考文章
 
 [FM（Factorization Machines）的理论与实践](https://zhuanlan.zhihu.com/p/50426292)
+
+## 扩展文章
+
+[推荐系统召回四模型之：全能的FM模型](https://zhuanlan.zhihu.com/p/58160982)
+
+利用FM来进行embedding从而实现召回

@@ -1,0 +1,15 @@
+FROM tensorflow/tensorflow:1.15.4
+
+RUN apt update \
+    && apt install -y openssh-server \
+    && rm -rf /var/lib/apt/lists/* \
+    # Whether to install scipy or sklearn depends on you
+    && pip3 --no-cache-dir install scipy sklearn \
+    && echo "PermitRootLogin yes" >> /etc/ssh/sshd_config \
+    && sed -i 's/^Subsystem/#&/' /etc/ssh/sshd_config \
+    && echo "Subsystem sftp internal-sftp" >> /etc/ssh/sshd_config
+
+CMD /bin/bash
+
+# pip3 --no-cache-dir install pydevd-pycharm~=[your version]
+# /etc/init.d/ssh restart
