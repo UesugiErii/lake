@@ -18,6 +18,8 @@
 
 私钥放到客户端的~/.ssh, 公钥追加到服务端的~/.ssh/authorized_keys
 
+`ssh-add ~/.ssh/{你的私钥名称}`, 此命令非永久生效!
+
 ## 设置环境变量
 
 `/etc/profile`, 对所有用户有效
