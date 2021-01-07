@@ -1,0 +1,25 @@
+编译方法(选一种即可):
+
+1.
+
+gcc  main.cpp -lstdc++ -o acauto
+
+
+2.
+
+g++ main.cpp -o acauto
+
+
+3.
+
+cmake.
+make
+
+
+
+main.py 是只输出前3个offset的版本
+all_offset.py 会输出全部的offset
+
+point是使用指针而非数组的版本
+
+refer: https://oi-wiki.org/string/ac-automaton/

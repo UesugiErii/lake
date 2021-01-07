@@ -19,3 +19,7 @@ GBDT用了一阶导数, 而XGBoost用了一阶和二阶导数
 [XGBoost算法原理小结](https://www.cnblogs.com/pinard/p/10979808.html)
 
 [XGBoost类库使用小结](https://www.cnblogs.com/pinard/p/11114748.html)
+
+## LightGBM
+
+[LightGBM 中文文档](https://lightgbm.apachecn.org/#/)

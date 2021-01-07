@@ -1,0 +1,16 @@
+编译方法(选一种即可):
+
+1.
+
+gcc  7_mtrie.cpp -lstdc++ -o mtrie
+
+
+2.
+
+g++ 7_mtrie.cpp -o mtrie
+
+
+3.
+
+cmake.
+make

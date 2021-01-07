@@ -1,0 +1,16 @@
+编译方法(选一种即可):
+
+1.
+
+gcc  7_rawtrie.cpp -lstdc++ -o rawtrie
+
+
+2.
+
+g++ 7_rawtrie.cpp -o rawtrie
+
+
+3.
+
+cmake.
+make

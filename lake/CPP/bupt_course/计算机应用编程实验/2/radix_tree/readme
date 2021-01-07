@@ -1,0 +1,16 @@
+编译方法(选一种即可):
+
+1.
+
+gcc  main.cpp -lstdc++ -o radix_search
+
+
+2.
+
+g++ main.cpp -o radix_search
+
+
+3.
+
+cmake.
+make

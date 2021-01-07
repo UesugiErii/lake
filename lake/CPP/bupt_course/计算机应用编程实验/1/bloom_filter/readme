@@ -1,0 +1,17 @@
+三种编译方法:
+
+1. 
+
+gcc main.cpp -lstdc++  -lm
+
+
+2.
+
+g++ main.cpp
+
+
+3.
+
+cmake.
+make
+
